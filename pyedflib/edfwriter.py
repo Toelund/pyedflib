@@ -685,7 +685,7 @@ class EdfWriter(object):
             dataOfOneSecond = np.array([], dtype=np.int32 if digital else None)
             for i in np.arange(len(data_list)):
                 # dataOfOneSecond[dataOfOneSecondInd:dataOfOneSecondInd+self.channels[i]['sample_rate']] = data_list[i].ravel()[int(ind[i]):int(ind[i]+self.channels[i]['sample_rate'])]
-                dataOfOneSecond = np.append(dataOfOneSecond,data_list[i].ravel()[int(ind[i]):int(ind[i]+sampleRates[i])])
+                dataOfOneSecond = np.append(dataOfOneSecond,data_list[i][int(ind[i]):int(ind[i]+sampleRates[i])])
                 # self.writePhysicalSamples(data_list[i].ravel()[int(ind[i]):int(ind[i]+self.channels[i]['sample_rate'])])
                 ind[i] += sampleRates[i]
                 # dataOfOneSecondInd += sampleRates[i]
@@ -708,7 +708,7 @@ class EdfWriter(object):
             lastSampleInd = int(np.max(data_list[i].shape) - ind[i])
             lastSampleInd = int(np.min((lastSampleInd,sampleRates[i])))
             if lastSampleInd > 0:
-                lastSamples[:lastSampleInd] = data_list[i].ravel()[-lastSampleInd:]
+                lastSamples[:lastSampleInd] = data_list[i][-lastSampleInd:]
                 # dataOfOneSecond[dataOfOneSecondInd:dataOfOneSecondInd+self.channels[i]['sample_rate']] = lastSamples
                 # dataOfOneSecondInd += self.channels[i]['sample_rate']
                 if digital:
